@@ -55,7 +55,7 @@ const Navbar = () => {
 
         {/* Login/Logout Toggle */}
         {isLoggedIn ? (
-          <button onClick={handleLogout} className="logout-btn">
+          <button  onClick={handleLogout} className="logout-btn">
             Logout
           </button>
         ) : (

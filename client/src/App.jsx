@@ -7,6 +7,7 @@ import Signup from './pages/signup/Signup'
 import Contact from './pages/contact/Contact'
 import Photos from './pages/photos/Photos'
 import Dashboard from './pages/dashboard/Dashboard'
+import PostArt from './pages/post-art/PostArt'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path : "/dashboard",
     element : <Dashboard/>
+  },
+  {
+    path : "/post-art",
+    element : <PostArt/>
   },
 ])
 

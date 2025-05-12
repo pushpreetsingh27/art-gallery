@@ -1,52 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./Photos.css";
 import Navbar from "../../components/Navbar";
 
-const uploadedPhotos = [
-  {
-    id: 1,
-    title: "The Eyes",
-    imageUrl: "/art-1.jpg",
-    artist: "Anya Painter",
-  },
-  {
-    id: 2,
-    title: "Human Color",
-    imageUrl: "/art-2.jpeg",
-    artist: "Leo Green",
-  },
-  {
-    id: 3,
-    title: " Sea Waves",
-    imageUrl: "/art-3.webp",
-    artist: "Mira Blue",
-  },
-  {
-    id: 4,
-    title: "The Peacock",
-    imageUrl: "/art-4.jpeg",
-    artist: "Sophie Lane",
-  },
-];
-
 const Photos = () => {
+  const [arts, setArts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchArts = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/v1/art/get-arts", {
+        withCredentials: true, // ✅ send cookies with request
+      });
+
+      if (response.data.success && Array.isArray(response.data.data)) {
+        setArts(response.data.data);
+      } else {
+        setArts([]);
+      }
+    } catch (error) {
+      console.error("Error fetching arts:", error);
+      setArts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchArts();
+  }, []);
+
   return (
     <>
-    <Navbar/>
-    <div className="photos-page">
-      <h2>User Uploaded Artworks</h2>
-      <div className="photos-grid">
-        {uploadedPhotos.map((photo) => (
-          <div key={photo.id} className="photo-card">
-            <img src={photo.imageUrl} alt={photo.title} />
-            <div className="photo-info">
-              <h4>{photo.title}</h4>
-              <p>By {photo.artist}</p>
-            </div>
+      <Navbar />
+      <div className="photos-page">
+        <h2>User Uploaded Artworks</h2>
+        {loading ? (
+          <p>Loading...</p>
+        ) : arts.length === 0 ? (
+          <p>No arts uploaded yet.</p>
+        ) : (
+          <div className="photos-grid">
+            {arts.map((photo) => (
+              <div key={photo._id} className="photo-card">
+                <img src={photo.imageUrl} alt={photo.artName} />
+                <div className="photo-info">
+                  <h4>{photo.artName}</h4>
+                  <p>ID: {photo._id}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
-    </div>
     </>
   );
 };
