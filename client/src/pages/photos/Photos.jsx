@@ -46,7 +46,6 @@ const Photos = () => {
                 <img src={photo.imageUrl} alt={photo.artName} />
                 <div className="photo-info">
                   <h4>{photo.artName}</h4>
-                  <p>ID: {photo._id}</p>
                 </div>
               </div>
             ))}

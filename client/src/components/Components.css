@@ -57,6 +57,13 @@
   color: #333;
 }
 
+.logout-btn{
+  background-color: #f3750e;
+  padding: 5px 12px;
+  cursor: pointer;
+
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .menu-toggle {

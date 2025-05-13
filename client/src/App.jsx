@@ -8,6 +8,7 @@ import Contact from './pages/contact/Contact'
 import Photos from './pages/photos/Photos'
 import Dashboard from './pages/dashboard/Dashboard'
 import PostArt from './pages/post-art/PostArt'
+import AboutUs from './pages/about-us/AboutUs'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path : "/dashboard",
     element : <Dashboard/>
+  },
+  {
+    path : "/about-us",
+    element : <AboutUs/>
   },
   {
     path : "/post-art",

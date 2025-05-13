@@ -59,3 +59,38 @@ export const getAllArt = async (req, res) => {
 
 
 
+// Helper to extract public_id from Cloudinary URL
+const extractPublicId = (url) => {
+  const parts = url.split('/');
+  const fileWithExtension = parts[parts.length - 1];
+  const publicId = fileWithExtension.split('.')[0];
+  return `artGallery/${publicId}`;
+};
+
+export const deleteArt = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Delete the document and get it in one step
+    const art = await Art.findByIdAndDelete(id);
+
+    if (!art) {
+      return res.status(404).json({ success: false, message: "Artwork not found" });
+    }
+
+    // Delete image from Cloudinary
+    const publicId = extractPublicId(art.imageUrl);
+    await cloudinary.uploader.destroy(publicId);
+
+    res.status(200).json({
+      success: true,
+      message: "Artwork deleted successfully",
+    });
+
+  } catch (error) {
+    console.error("Delete Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+

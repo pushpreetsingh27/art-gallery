@@ -21,7 +21,6 @@ const Login = () => {
       if (response.data.success) {
         alert(response.data.message);
 
-        // ✅ Store user info (you can also store token if available)
         localStorage.setItem("user", JSON.stringify(response.data.user));
 
         navigate("/"); // Redirect to homepage
